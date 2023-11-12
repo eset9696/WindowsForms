@@ -17,18 +17,12 @@ namespace WindowsForms
 		bool show_date;
 		bool visible_controls;
 		private PrivateFontCollection myFontCollection = new PrivateFontCollection();
-		private Form fontWindow = new Form();
-		private ListBox lbFontMenu = new ListBox();
-		private Button btnApply = new Button();
 		private string[] fileNames = { "Mantinia", "SlideR", "OptimusPrinceps", "Mason Chronicles" };
-		public System.Windows.Forms.Label get_label()
-		{
-			return label1;
-		}
+		
 		public Form1()
 		{
 
-			InitializeComponent();
+			InitializeComponent(); // все дополнительные формы объявлены и инициализированы здесь
 			this.StartPosition = FormStartPosition.Manual;
 			this.Location= new System.Drawing.Point(
 				System.Windows.Forms.Screen.PrimaryScreen.Bounds.Right - this.Width - 50,
@@ -123,38 +117,15 @@ namespace WindowsForms
 
 		private void fontToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			/*Form2 fontMenu = new Form2();
-			//fontMenu.MdiParent = this;
-			fontMenu.ShowDialog();*/
-			fontWindow.Size = new Size(600, 400);
-			fontWindow.StartPosition = FormStartPosition.CenterScreen;
-			fontWindow.Text = "Font menu";
-			fontWindow.TopMost = true;
-
-			lbFontMenu.Size = new Size(500, 100);
-			lbFontMenu.Location = new Point(50, 30);
-
 			
-			btnApply.Text = "Apply";
-			btnApply.Size = new Size(60, 40);
-			btnApply.Location = new Point(400, 300);
-			this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
-
-
-			fontWindow.Controls.Add(btnApply);
-			fontWindow.Controls.Add(lbFontMenu);
-			LoadMyFonts();
 			fontWindow.ShowDialog();
-
 		}
 
-		private void chooseFont()
+		private void btnApply_Click(object sender, EventArgs e) // Вызывает метод, который применяет выбранный шрифт к часам
 		{
-			//label1.Font = new Font(myFontCollection.Families[2], 48F);
-			string selectedFont = lbFontMenu.SelectedItem.ToString();
-			label1.Text = selectedFont;
-			if (!string.IsNullOrEmpty(selectedFont)) 
+			if (lbFontMenu.SelectedItem != null)
 			{
+				string selectedFont = lbFontMenu.SelectedItem.ToString();
 				switch (selectedFont)
 				{
 					case "OptimusPrinceps":
@@ -172,32 +143,42 @@ namespace WindowsForms
 						break;
 				}
 			}
-			
 		}
 
-		private void btnApply_Click(object sender, EventArgs e) 
+		private void LoadMyFonts() // Загружает шрифты в программу
 		{
-			chooseFont();
-		}
-
-		private void LoadMyFonts()
-		{
-
-			
-			//myFontCollection.AddFontFile("DarkSouls.ttf");
 			for (int i = 0; i < fileNames.Length; i++)
 			{
 				myFontCollection.AddFontFile($"C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Fonts\\{fileNames[i]}.ttf");
 			}
-			PreviewFont();
-		}
 
-		private void PreviewFont()
-		{
 			for (int i = 0; i < myFontCollection.Families.Length; i++)
 			{
-				lbFontMenu.Items.Add(myFontCollection.Families[i]);
+				lbFontMenu.Items.Add(myFontCollection.Families[i].Name);
 			}
 		}
+
+		private void lbFontMenu_Click(object sender, EventArgs e) //Применяет выбранный в листбоксе шрифт к лейблу - превью
+		{
+			if (lbFontMenu.SelectedItem != null)
+			{
+				string selectedFont = lbFontMenu.SelectedItem.ToString();
+				switch (selectedFont)
+				{
+					case "OptimusPrinceps":
+						labelFontPreview.Font = new Font(myFontCollection.Families[2], 48F);
+						break;
+					case "Mantinia":
+						labelFontPreview.Font = new Font(myFontCollection.Families[0], 48F);
+						break;
+					case "SlideR":
+						labelFontPreview.Font = new Font(myFontCollection.Families[1], 48F);
+						break;
+					case "Mason Chronicles":
+						labelFontPreview.Font = new Font(myFontCollection.Families[3], 48F);
+						break;
+				}
+			}
+	}
 	}
 }

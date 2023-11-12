@@ -1,4 +1,7 @@
-﻿namespace WindowsForms
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace WindowsForms
 {
 	partial class Form1
 	{
@@ -185,6 +188,36 @@
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
+
+
+			//My components
+			fontWindow.Size = new Size(600, 400);
+			fontWindow.StartPosition = FormStartPosition.CenterScreen;
+			fontWindow.Text = "Font menu";
+			fontWindow.TopMost = true;
+
+			lbFontMenu.Size = new Size(500, 200);
+			lbFontMenu.Location = new Point(50, 30);
+			lbFontMenu.Font = new Font("", 24);
+			LoadMyFonts();
+			this.lbFontMenu.Click += new System.EventHandler(this.lbFontMenu_Click);
+
+			labelFontPreview.Size = new Size(500, 100);
+			labelFontPreview.Location = new Point(40, 220);
+			labelFontPreview.TextAlign = ContentAlignment.TopCenter;
+			labelFontPreview.Text = "0123456789";
+			labelFontPreview.Font = new Font("Times new Roman", 48);
+
+			btnApply.Text = "Apply";
+			btnApply.Size = new Size(60, 30);
+			btnApply.Location = new Point(400, 300);
+			this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+
+
+			fontWindow.Controls.Add(btnApply);
+			fontWindow.Controls.Add(lbFontMenu);
+			fontWindow.Controls.Add(labelFontPreview);
+
 		}
 
 		#endregion
@@ -203,7 +236,11 @@
 		private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
 
-
+		//FontWondow
+		private Form fontWindow = new Form();
+		private ListBox lbFontMenu = new ListBox();
+		private Button btnApply = new Button();
+		private Label labelFontPreview = new Label();
 	}
 }
 
