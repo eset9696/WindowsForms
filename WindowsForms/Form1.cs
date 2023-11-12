@@ -27,7 +27,7 @@ namespace WindowsForms
 		{
 
 			InitializeComponent();
-			InitializeMyComponents();
+			InitializeMyComponents(); // Инициализирует мои формы
 			this.StartPosition = FormStartPosition.Manual;
 			this.Location= new System.Drawing.Point(
 				System.Windows.Forms.Screen.PrimaryScreen.Bounds.Right - this.Width - 50,
