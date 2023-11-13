@@ -20,6 +20,7 @@ namespace WindowsForms
 		private Form fontWindow = new Form();
 		private ListBox lbFontMenu = new ListBox();
 		private Button btnApply = new Button();
+		private Button btnCancel = new Button();
 		private Label labelFontPreview = new Label();
 		private string[] fileNames = { "Mantinia", "SlideR", "OptimusPrinceps", "Mason Chronicles" };
 		
@@ -63,8 +64,13 @@ namespace WindowsForms
 			btnApply.Location = new Point(400, 300);
 			this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
 
+			btnCancel.Text = "Cancel";
+			btnCancel.Size = new Size(60, 30);
+			btnCancel.Location = new Point(470, 300);
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 
 			fontWindow.Controls.Add(btnApply);
+			fontWindow.Controls.Add(btnCancel);
 			fontWindow.Controls.Add(lbFontMenu);
 			fontWindow.Controls.Add(labelFontPreview);
 		}
@@ -181,7 +187,10 @@ namespace WindowsForms
 			fontWindow.Controls.Add(labelFontPreview);*/
 			fontWindow.ShowDialog();
 		}
-
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			fontWindow.Close();
+		}
 		private void btnApply_Click(object sender, EventArgs e) // Вызывает метод, который применяет выбранный шрифт к часам
 		{
 			if (lbFontMenu.SelectedItem != null)
