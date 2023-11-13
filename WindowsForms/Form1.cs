@@ -16,19 +16,11 @@ namespace WindowsForms
 	{
 		bool show_date;
 		bool visible_controls;
-		private PrivateFontCollection myFontCollection = new PrivateFontCollection();
-		private Form fontWindow = new Form();
-		private ListBox lbFontMenu = new ListBox();
-		private Button btnApply = new Button();
-		private Button btnCancel = new Button();
-		private Label labelFontPreview = new Label();
-		private string[] fileNames = { "Mantinia", "SlideR", "OptimusPrinceps", "Mason Chronicles" };
 		
 		public Form1()
 		{
 
-			InitializeComponent();
-			InitializeMyComponents(); // Инициализирует мои формы
+			InitializeComponent(); // Инициализирует мои формы
 			this.StartPosition = FormStartPosition.Manual;
 			this.Location= new System.Drawing.Point(
 				System.Windows.Forms.Screen.PrimaryScreen.Bounds.Right - this.Width - 50,
@@ -36,44 +28,11 @@ namespace WindowsForms
 			show_date = false;
 			visible_controls = false;
 			btnHideControls.Visible = false;
+			btnFont.Visible = false;
 			btnClose.Visible = false;
 			
 		}
 
-		private void InitializeMyComponents()
-		{
-			fontWindow.Size = new Size(600, 400);
-			fontWindow.StartPosition = FormStartPosition.CenterScreen;
-			fontWindow.Text = "Font menu";
-			fontWindow.TopMost = true;
-
-			lbFontMenu.Size = new Size(500, 200);
-			lbFontMenu.Location = new Point(50, 30);
-			lbFontMenu.Font = new Font("", 24);
-			LoadMyFonts();
-			this.lbFontMenu.Click += new System.EventHandler(this.lbFontMenu_Click);
-
-			labelFontPreview.Size = new Size(500, 100);
-			labelFontPreview.Location = new Point(40, 220);
-			labelFontPreview.TextAlign = ContentAlignment.TopCenter;
-			labelFontPreview.Text = "0123456789";
-			labelFontPreview.Font = new Font("Times new Roman", 48);
-
-			btnApply.Text = "Apply";
-			btnApply.Size = new Size(60, 30);
-			btnApply.Location = new Point(400, 300);
-			this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
-
-			btnCancel.Text = "Cancel";
-			btnCancel.Size = new Size(60, 30);
-			btnCancel.Location = new Point(470, 300);
-			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-
-			fontWindow.Controls.Add(btnApply);
-			fontWindow.Controls.Add(btnCancel);
-			fontWindow.Controls.Add(lbFontMenu);
-			fontWindow.Controls.Add(labelFontPreview);
-		}
 		private void SetShowDate(bool show_date)
 		{
 			this.show_date = show_date;
@@ -88,6 +47,7 @@ namespace WindowsForms
 			this.ShowInTaskbar = visible_controls;
 			this.cbShowDate.Visible = visible_controls;
 			this.btnHideControls.Visible = visible_controls;
+			this.btnFont.Visible = visible_controls;
 			this.btnClose.Visible = visible_controls;
 			//this.notifyIcon1.Visible = !visible;
 			showControlsToolStripMenuItem.Checked = visible_controls;
@@ -158,97 +118,26 @@ namespace WindowsForms
 
 		private void fontToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//My components
-			/*fontWindow.Size = new Size(600, 400);
-			fontWindow.StartPosition = FormStartPosition.CenterScreen;
-			fontWindow.Text = "Font menu";
-			fontWindow.TopMost = true;
-
-			lbFontMenu.Size = new Size(500, 200);
-			lbFontMenu.Location = new Point(50, 30);
-			lbFontMenu.Font = new Font("", 24);
-			LoadMyFonts();
-			this.lbFontMenu.Click += new System.EventHandler(this.lbFontMenu_Click);
-
-			labelFontPreview.Size = new Size(500, 100);
-			labelFontPreview.Location = new Point(40, 220);
-			labelFontPreview.TextAlign = ContentAlignment.TopCenter;
-			labelFontPreview.Text = "0123456789";
-			labelFontPreview.Font = new Font("Times new Roman", 48);
-
-			btnApply.Text = "Apply";
-			btnApply.Size = new Size(60, 30);
-			btnApply.Location = new Point(400, 300);
-			this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
-
-
-			fontWindow.Controls.Add(btnApply);
-			fontWindow.Controls.Add(lbFontMenu);
-			fontWindow.Controls.Add(labelFontPreview);*/
-			fontWindow.ShowDialog();
-		}
-		private void btnCancel_Click(object sender, EventArgs e)
-		{
-			fontWindow.Close();
-		}
-		private void btnApply_Click(object sender, EventArgs e) // Вызывает метод, который применяет выбранный шрифт к часам
-		{
-			if (lbFontMenu.SelectedItem != null)
-			{
-				string selectedFont = lbFontMenu.SelectedItem.ToString();
-				switch (selectedFont)
-				{
-					case "OptimusPrinceps":
-						label1.Font = new Font(myFontCollection.Families[2], 48F);
-
-						break;
-					case "Mantinia":
-						label1.Font = new Font(myFontCollection.Families[0], 48F);
-						break;
-					case "SlideR":
-						label1.Font = new Font(myFontCollection.Families[1], 48F);
-						break;
-					case "Mason Chronicles":
-						label1.Font = new Font(myFontCollection.Families[3], 48F);
-						break;
-				}
-			}
+			btnFont_Click(sender, e);
 		}
 
-		private void LoadMyFonts() // Загружает шрифты в программу
+		private void btnFont_Click(object sender, EventArgs e)
 		{
-			for (int i = 0; i < fileNames.Length; i++)
-			{
-				myFontCollection.AddFontFile($"C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Fonts\\{fileNames[i]}.ttf");
-			}
-
-			for (int i = 0; i < myFontCollection.Families.Length; i++)
-			{
-				lbFontMenu.Items.Add(myFontCollection.Families[i].Name);
-			}
+			Font font = new Font();
+			font.ShowDialog();
+			label1.Font = font.OldFont;
 		}
 
-		private void lbFontMenu_Click(object sender, EventArgs e) //Применяет выбранный в листбоксе шрифт к лейблу - превью
+		private void foregroundToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (lbFontMenu.SelectedItem != null)
-			{
-				string selectedFont = lbFontMenu.SelectedItem.ToString();
-				switch (selectedFont)
-				{
-					case "OptimusPrinceps":
-						labelFontPreview.Font = new Font(myFontCollection.Families[2], 48F);
-						break;
-					case "Mantinia":
-						labelFontPreview.Font = new Font(myFontCollection.Families[0], 48F);
-						break;
-					case "SlideR":
-						labelFontPreview.Font = new Font(myFontCollection.Families[1], 48F);
-						break;
-					case "Mason Chronicles":
-						labelFontPreview.Font = new Font(myFontCollection.Families[3], 48F);
-						break;
-				}
-			}
-	}
+			colorDialog1.ShowDialog(this);
+			label1.ForeColor = colorDialog1.Color;
+		}
+
+		private void backgroundToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			colorDialog1.ShowDialog(this);
+			label1.BackColor = colorDialog1.Color;
+		}
 	}
 }
