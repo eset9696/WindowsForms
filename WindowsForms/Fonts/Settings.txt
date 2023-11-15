@@ -1,0 +1,2 @@
+Font = Microsoft Sans Serif
+Font size = 48
