@@ -31,8 +31,9 @@ namespace WindowsForms
 			btnHideControls.Visible = false;
 			btnFont.Visible = false;
 			btnClose.Visible = false;
+			font = new Font(label1.Font);
 			//font = new Font(label1.Font);
-			load("Settings.txt");
+			//load("Settings.txt");
 		}
 
 		private void SetShowDate(bool show_date)
@@ -75,7 +76,7 @@ namespace WindowsForms
 
 		private void btnClose_Click(object sender, EventArgs e)
 		{
-			save("Settings.txt");
+			//save("Settings.txt");
 			this.Close();
 		}
 
@@ -90,7 +91,7 @@ namespace WindowsForms
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			save("Settings.txt");
+			//save("Settings.txt");
 			this.Close();
 		}
 
@@ -128,8 +129,8 @@ namespace WindowsForms
 
 		private void btnFont_Click(object sender, EventArgs e)
 		{
-			font = new Font(label1.Font);
-			font.ShowDialog();
+			
+			font.ShowDialog(this);
 			label1.Font = font.OldFont;
 		}
 
@@ -145,7 +146,7 @@ namespace WindowsForms
 			label1.BackColor = colorDialog1.Color;
 		}
 
-		private void save(string filename)
+		/*private void save(string filename)
 		{
 			Directory.SetCurrentDirectory("C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\bin\\Debug");
 			StreamWriter sw = new StreamWriter(filename);
@@ -190,6 +191,6 @@ namespace WindowsForms
 				}
 			}
 				sr.Close();
-		}
+		}*/
 	}
 }

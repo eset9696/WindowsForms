@@ -16,7 +16,7 @@ namespace WindowsForms
 	{
 		public System.Drawing.Font NewFont { get; set; }
 		public System.Drawing.Font OldFont { get; set; }
-		public System.Drawing.Font DfltFont { get; set; }
+		//public System.Drawing.Font DfltFont { get; set; }
 		public System.Windows.Forms.ComboBox get_cbFont()
 		{
 			return cbFont;
@@ -25,7 +25,7 @@ namespace WindowsForms
 		public Font(System.Drawing.Font oldFont)
 		{
 			OldFont = oldFont;
-			DfltFont = oldFont;
+			//DfltFont = oldFont;
 			InitializeComponent();
 			if(Directory.GetCurrentDirectory().Contains("bin"))Directory.SetCurrentDirectory("..\\..\\Fonts");
 			string currentDirectory = Directory.GetCurrentDirectory();
@@ -53,7 +53,7 @@ namespace WindowsForms
 
 		private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
 		{
-			PrivateFontCollection pfs = new PrivateFontCollection();
+			/*PrivateFontCollection pfs = new PrivateFontCollection();
 			if (DfltFont.Name.ToString() == cbFont.SelectedItem.ToString())
 			{
 				NewFont = DfltFont;
@@ -65,7 +65,11 @@ namespace WindowsForms
 				//NewFont = new System.Drawing.Font(pfs.Families[0], lblExample.Font.Size);
 				NewFont = new System.Drawing.Font(pfs.Families[0], (float)numericUpDownFontSize.Value);
 				lblExample.Font = NewFont;
-			}
+			}*/
+			PrivateFontCollection pfs = new PrivateFontCollection();
+			pfs.AddFontFile(cbFont.SelectedItem.ToString());
+			NewFont = new System.Drawing.Font(pfs.Families[0], (float)numericUpDownFontSize.Value);
+			lblExample.Font = NewFont;
 		}
 	}
 }
