@@ -35,8 +35,9 @@ namespace WindowsForms
 				if(i.Split().Last().Contains(".ttf")) this.cbFont.Items.Add(i.Split('\\').Last());
 			}
 			//cbFont.Items.Add(OldFont);
+			cbFont.SelectedIndex = 1;
 			numericUpDownFontSize.Value = (decimal)OldFont.Size;
-			cbFont.SelectedItem = OldFont;
+			lblExample.Font = OldFont;
 		}
 		
 		private void btnCancel_Click(object sender, EventArgs e)
@@ -66,10 +67,16 @@ namespace WindowsForms
 				NewFont = new System.Drawing.Font(pfs.Families[0], (float)numericUpDownFontSize.Value);
 				lblExample.Font = NewFont;
 			}*/
+			
 			PrivateFontCollection pfs = new PrivateFontCollection();
 			pfs.AddFontFile(cbFont.SelectedItem.ToString());
 			NewFont = new System.Drawing.Font(pfs.Families[0], (float)numericUpDownFontSize.Value);
 			lblExample.Font = NewFont;
+		}
+
+		private void numericUpDownFontSize_ValueChanged(object sender, EventArgs e)
+		{
+			comboBox1_SelectionChangeCommitted(sender, e);
 		}
 	}
 }
