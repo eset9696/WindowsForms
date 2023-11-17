@@ -33,8 +33,6 @@ namespace WindowsForms
 				if(i.Split().Last().Contains(".ttf")) this.cbFont.Items.Add(i.Split('\\').Last());
 				if(i.Split().Last().Contains(".TTF")) this.cbFont.Items.Add(i.Split('\\').Last());
 			}
-			//cbFont.SelectedIndex = 1;
-
 			cbFont.SelectedItem = fontFileName;
 			numericUpDownFontSize.Value = (decimal)OldFont.Size;
 			lblExample.Font = OldFont;
