@@ -1,4 +1,4 @@
-Font=SfDigitalReadoutLightOblique-VqXe.ttf
-Font size=36
+Font=TERMINAT.TTF
+Font size=48
 ForeColor=-65536
 BackColor=-16777216

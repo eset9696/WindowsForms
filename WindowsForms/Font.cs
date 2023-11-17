@@ -31,6 +31,7 @@ namespace WindowsForms
 			foreach (string i in Directory.GetFiles(currentDirectory))
 			{
 				if(i.Split().Last().Contains(".ttf")) this.cbFont.Items.Add(i.Split('\\').Last());
+				if(i.Split().Last().Contains(".TTF")) this.cbFont.Items.Add(i.Split('\\').Last());
 			}
 			//cbFont.SelectedIndex = 1;
 
