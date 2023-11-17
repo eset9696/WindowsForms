@@ -1,0 +1,4 @@
+Font=7Led-8RoJ.ttf
+Font size=36
+ForeColor=-16711936
+BackColor=-16777216

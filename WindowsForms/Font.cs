@@ -17,9 +17,9 @@ namespace WindowsForms
 		public System.Drawing.Font NewFont { get; set; }
 		public System.Drawing.Font OldFont { get; set; }
 		//public System.Drawing.Font DfltFont { get; set; }
-		public System.Windows.Forms.ComboBox get_cbFont()
+		public String get_cbFontSelectedItem()
 		{
-			return cbFont;
+			return cbFont.SelectedItem.ToString();
 		}
 
 		public Font(System.Drawing.Font oldFont)

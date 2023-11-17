@@ -7,6 +7,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +19,9 @@ namespace WindowsForms
 		bool show_date;
 		bool visible_controls;
 		Font font;
+		//TypeConverter converter;
+		String saveFolder = "C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Save\\";
+		String cfgFileName = "Settings.txt";
 		public Form1()
 		{
 
@@ -32,8 +36,9 @@ namespace WindowsForms
 			btnFont.Visible = false;
 			btnClose.Visible = false;
 			font = new Font(label1.Font);
+			//converter = TypeDescriptor.GetConverter(typeof(System.Drawing.Font));
 			//font = new Font(label1.Font);
-			//load("Settings.txt");
+			load(cfgFileName);
 		}
 
 		private void SetShowDate(bool show_date)
@@ -76,7 +81,7 @@ namespace WindowsForms
 
 		private void btnClose_Click(object sender, EventArgs e)
 		{
-			//save("Settings.txt");
+			save(cfgFileName);
 			this.Close();
 		}
 
@@ -91,7 +96,7 @@ namespace WindowsForms
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//save("Settings.txt");
+			save(cfgFileName);
 			this.Close();
 		}
 
@@ -146,19 +151,42 @@ namespace WindowsForms
 			label1.BackColor = colorDialog1.Color;
 		}
 
-		/*private void save(string filename)
+		private void save(string filename)
 		{
-			Directory.SetCurrentDirectory("C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\bin\\Debug");
-			StreamWriter sw = new StreamWriter(filename);
-			sw.WriteLine($"Font={font.get_cbFont().SelectedItem.ToString()}\nFont size={label1.Font.Size}");
-			if (label1.ForeColor.Name != null) sw.WriteLine($"ForeColor={label1.ForeColor.Name}");
-			if (label1.BackColor.Name != null) sw.WriteLine($"BackColor={label1.BackColor.Name}");
+			StreamWriter sw = new StreamWriter(saveFolder + filename);
+			sw.WriteLine($"Font={font.get_cbFontSelectedItem()}\nFont size={label1.Font.Size}");
+			//sw.WriteLine($"ForeColor={label1.ForeColor.A}/{label1.ForeColor.R}/{label1.ForeColor.G}/{label1.ForeColor.B}");
+			sw.WriteLine($"ForeColor={label1.ForeColor.ToArgb()}");
+			sw.WriteLine($"BackColor={label1.BackColor.ToArgb()}");
 			sw.Close();
+
+			//string font = converter.ConvertToString(label1.Font);
+			//sw.WriteLine($"{font}\nFont size={label1.Font.Size}");
+			//if (label1.ForeColor.Name != null) sw.WriteLine($"ForeColor={label1.ForeColor.Name}");
+			//if (label1.BackColor.Name != null) sw.WriteLine($"BackColor={label1.BackColor.Name}");
 		}
 		private void load(string filename)
 		{
-			Directory.SetCurrentDirectory("C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\bin\\Debug");
-			StreamReader sr = new StreamReader(filename);
+
+			/*StreamReader sr = new StreamReader(path + filename);
+			PrivateFontCollection fontCollection = new PrivateFontCollection();
+			string buffer = sr.ReadLine();
+			if (buffer != null)
+			{
+				foreach (string i in Directory.GetFiles(Directory.GetCurrentDirectory()))
+				{
+					if (i.Split().Last().Contains(".ttf"))
+					{
+						fontCollection.AddFontFile(i.Split('\\').Last());
+						fontCollection.
+						System.Drawing.Font fontFromFile = new System.Drawing.Font(fontCollection.Families[0]);
+					}
+				}
+				//System.Drawing.Font fontFromFile = (System.Drawing.Font)converter.ConvertFromString(buffer);
+				label1.Font = fontFromFile;
+			}
+			sr.Close(); */
+			StreamReader sr = new StreamReader(saveFolder + filename);
 			string buffer = sr.ReadLine();
 			if (buffer != null)
 			{
@@ -169,28 +197,26 @@ namespace WindowsForms
 				string fontSize = buffer.Substring(pos + 1);
 				double size = Convert.ToDouble(fontSize);
 				PrivateFontCollection fontCollection = new PrivateFontCollection();
-				if (Directory.GetCurrentDirectory().Contains("bin")) Directory.SetCurrentDirectory("C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Fonts");
-				if (fontName != "Microsoft Sans Serif")
-				{
-					fontCollection.AddFontFile(fontName);
-					System.Drawing.Font LoadFont = new System.Drawing.Font(fontCollection.Families[0], (float)size);
-					label1.Font = LoadFont;
-				}
+				fontCollection.AddFontFile(fontName);
+				System.Drawing.Font LoadFont = new System.Drawing.Font(fontCollection.Families[0], (float)size);
+				label1.Font = LoadFont;
 
 				buffer = sr.ReadLine();
-				if(buffer != null && buffer.Contains("ForeColor"))
+				if (buffer != null && buffer.Contains("ForeColor"))
 				{
 					pos = buffer.IndexOf('=');
-					label1.ForeColor = Color.FromName(buffer.Substring(pos + 1));
+					label1.ForeColor = Color.FromArgb(Convert.ToInt32(buffer.Substring(pos + 1)));
 					buffer = sr.ReadLine();
 				}
+
 				if (buffer != null && buffer.Contains("BackColor"))
 				{
 					pos = buffer.IndexOf('=');
-					label1.BackColor = Color.FromName(buffer.Substring(pos + 1));
+					label1.BackColor = Color.FromArgb(Convert.ToInt32(buffer.Substring(pos + 1)));
+					buffer = sr.ReadLine();
 				}
 			}
-				sr.Close();
-		}*/
+			sr.Close();
+		}
 	}
-}
+	}
