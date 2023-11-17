@@ -1,4 +1,4 @@
-Font=TERMINAT.TTF
+Font=SFDigitalReadout-Light.ttf
 Font size=48
 ForeColor=-65536
 BackColor=-16777216

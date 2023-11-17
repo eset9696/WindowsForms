@@ -39,7 +39,6 @@ namespace WindowsForms
 			numericUpDownFontSize.Value = (decimal)OldFont.Size;
 			lblExample.Font = OldFont;
 		}
-		
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
 			this.Close();
@@ -47,7 +46,7 @@ namespace WindowsForms
 
 		private void btnOk_Click(object sender, EventArgs e)
 		{
-			comboBox1_SelectionChangeCommitted(sender, e);
+			
 			OldFont = NewFont;
 			this.Close();
 		}

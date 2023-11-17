@@ -19,9 +19,9 @@ namespace WindowsForms
 		bool show_date;
 		bool visible_controls;
 		Font font;
-		String saveFolder = "C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Save\\";
-		String fontFolder = "C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Fonts\\";
-		String cfgFileName = "Settings.txt";
+		string saveFolder = "C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Save\\";
+		string fontFolder = "C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Fonts\\";
+		string cfgFileName = "Settings.txt";
 		string fontName;
 		public Form1()
 		{
@@ -164,32 +164,30 @@ namespace WindowsForms
 		{
 			StreamReader sr = new StreamReader(saveFolder + filename);
 			string buffer = sr.ReadLine();
+			int pos;
 			if (buffer != null)
 			{
-				int pos = buffer.IndexOf("=");
+				pos = buffer.IndexOf("=");
 				fontName = buffer.Substring(pos + 1);
 				buffer = sr.ReadLine();
 				pos = buffer.IndexOf("=");
-				string fontSize = buffer.Substring(pos + 1);
-				double size = Convert.ToDouble(fontSize);
+				double size = Convert.ToDouble(buffer.Substring(pos + 1));
 				PrivateFontCollection fontCollection = new PrivateFontCollection();
 				fontCollection.AddFontFile(fontFolder + fontName);
-				System.Drawing.Font LoadFont = new System.Drawing.Font(fontCollection.Families[0], (float)size);
-				label1.Font = LoadFont;
-
+				label1.Font = new System.Drawing.Font(fontCollection.Families[0], (float)size);
+			}
+			buffer = sr.ReadLine();
+			if (buffer != null && buffer.Contains("ForeColor"))
+			{
+				pos = buffer.IndexOf('=');
+				label1.ForeColor = Color.FromArgb(Convert.ToInt32(buffer.Substring(pos + 1)));
 				buffer = sr.ReadLine();
-				if (buffer != null && buffer.Contains("ForeColor"))
-				{
-					pos = buffer.IndexOf('=');
-					label1.ForeColor = Color.FromArgb(Convert.ToInt32(buffer.Substring(pos + 1)));
-					buffer = sr.ReadLine();
-				}
+			}
 
-				if (buffer != null && buffer.Contains("BackColor"))
-				{
-					pos = buffer.IndexOf('=');
-					label1.BackColor = Color.FromArgb(Convert.ToInt32(buffer.Substring(pos + 1)));
-				}
+			if (buffer != null && buffer.Contains("BackColor"))
+			{
+				pos = buffer.IndexOf('=');
+				label1.BackColor = Color.FromArgb(Convert.ToInt32(buffer.Substring(pos + 1)));
 			}
 			sr.Close();
 		}
