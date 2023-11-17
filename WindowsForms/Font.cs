@@ -16,26 +16,25 @@ namespace WindowsForms
 	{
 		public System.Drawing.Font NewFont { get; set; }
 		public System.Drawing.Font OldFont { get; set; }
-		//public System.Drawing.Font DfltFont { get; set; }
+
+		String selectedItem;
 		public String get_cbFontSelectedItem()
 		{
-			return cbFont.SelectedItem.ToString();
+			return selectedItem;
 		}
-
-		public Font(System.Drawing.Font oldFont)
+		public Font(System.Drawing.Font oldFont, string fontFileName)
 		{
 			OldFont = oldFont;
-			//DfltFont = oldFont;
 			InitializeComponent();
 			if(Directory.GetCurrentDirectory().Contains("bin"))Directory.SetCurrentDirectory("..\\..\\Fonts");
 			string currentDirectory = Directory.GetCurrentDirectory();
-			//MessageBox.Show(this, currentDirectory, "Current directory", MessageBoxButtons.OK);
 			foreach (string i in Directory.GetFiles(currentDirectory))
 			{
 				if(i.Split().Last().Contains(".ttf")) this.cbFont.Items.Add(i.Split('\\').Last());
 			}
-			//cbFont.Items.Add(OldFont);
-			cbFont.SelectedIndex = 1;
+			//cbFont.SelectedIndex = 1;
+
+			cbFont.SelectedItem = fontFileName;
 			numericUpDownFontSize.Value = (decimal)OldFont.Size;
 			lblExample.Font = OldFont;
 		}
@@ -54,22 +53,9 @@ namespace WindowsForms
 
 		private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
 		{
-			/*PrivateFontCollection pfs = new PrivateFontCollection();
-			if (DfltFont.Name.ToString() == cbFont.SelectedItem.ToString())
-			{
-				NewFont = DfltFont;
-				lblExample.Font = NewFont;
-			}
-			else
-			{
-				pfs.AddFontFile(cbFont.SelectedItem.ToString());
-				//NewFont = new System.Drawing.Font(pfs.Families[0], lblExample.Font.Size);
-				NewFont = new System.Drawing.Font(pfs.Families[0], (float)numericUpDownFontSize.Value);
-				lblExample.Font = NewFont;
-			}*/
-			
 			PrivateFontCollection pfs = new PrivateFontCollection();
-			pfs.AddFontFile(cbFont.SelectedItem.ToString());
+			selectedItem = cbFont.SelectedItem.ToString();
+			pfs.AddFontFile(selectedItem);
 			NewFont = new System.Drawing.Font(pfs.Families[0], (float)numericUpDownFontSize.Value);
 			lblExample.Font = NewFont;
 		}

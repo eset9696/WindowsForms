@@ -19,9 +19,10 @@ namespace WindowsForms
 		bool show_date;
 		bool visible_controls;
 		Font font;
-		//TypeConverter converter;
 		String saveFolder = "C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Save\\";
+		String fontFolder = "C:\\Users\\sherk\\source\\repos\\WindowsForms\\WindowsForms\\Fonts\\";
 		String cfgFileName = "Settings.txt";
+		string fontName;
 		public Form1()
 		{
 
@@ -33,12 +34,11 @@ namespace WindowsForms
 			show_date = false;
 			visible_controls = false;
 			btnHideControls.Visible = false;
+			btnSave.Visible = false;
 			btnFont.Visible = false;
 			btnClose.Visible = false;
-			font = new Font(label1.Font);
-			//converter = TypeDescriptor.GetConverter(typeof(System.Drawing.Font));
-			//font = new Font(label1.Font);
 			load(cfgFileName);
+			font = new Font(label1.Font, fontName);
 		}
 
 		private void SetShowDate(bool show_date)
@@ -55,6 +55,7 @@ namespace WindowsForms
 			this.ShowInTaskbar = visible_controls;
 			this.cbShowDate.Visible = visible_controls;
 			this.btnHideControls.Visible = visible_controls;
+			this.btnSave.Visible = visible_controls;
 			this.btnFont.Visible = visible_controls;
 			this.btnClose.Visible = visible_controls;
 			//this.notifyIcon1.Visible = !visible;
@@ -155,49 +156,24 @@ namespace WindowsForms
 		{
 			StreamWriter sw = new StreamWriter(saveFolder + filename);
 			sw.WriteLine($"Font={font.get_cbFontSelectedItem()}\nFont size={label1.Font.Size}");
-			//sw.WriteLine($"ForeColor={label1.ForeColor.A}/{label1.ForeColor.R}/{label1.ForeColor.G}/{label1.ForeColor.B}");
 			sw.WriteLine($"ForeColor={label1.ForeColor.ToArgb()}");
 			sw.WriteLine($"BackColor={label1.BackColor.ToArgb()}");
 			sw.Close();
-
-			//string font = converter.ConvertToString(label1.Font);
-			//sw.WriteLine($"{font}\nFont size={label1.Font.Size}");
-			//if (label1.ForeColor.Name != null) sw.WriteLine($"ForeColor={label1.ForeColor.Name}");
-			//if (label1.BackColor.Name != null) sw.WriteLine($"BackColor={label1.BackColor.Name}");
 		}
 		private void load(string filename)
 		{
-
-			/*StreamReader sr = new StreamReader(path + filename);
-			PrivateFontCollection fontCollection = new PrivateFontCollection();
-			string buffer = sr.ReadLine();
-			if (buffer != null)
-			{
-				foreach (string i in Directory.GetFiles(Directory.GetCurrentDirectory()))
-				{
-					if (i.Split().Last().Contains(".ttf"))
-					{
-						fontCollection.AddFontFile(i.Split('\\').Last());
-						fontCollection.
-						System.Drawing.Font fontFromFile = new System.Drawing.Font(fontCollection.Families[0]);
-					}
-				}
-				//System.Drawing.Font fontFromFile = (System.Drawing.Font)converter.ConvertFromString(buffer);
-				label1.Font = fontFromFile;
-			}
-			sr.Close(); */
 			StreamReader sr = new StreamReader(saveFolder + filename);
 			string buffer = sr.ReadLine();
 			if (buffer != null)
 			{
 				int pos = buffer.IndexOf("=");
-				string fontName = buffer.Substring(pos + 1);
+				fontName = buffer.Substring(pos + 1);
 				buffer = sr.ReadLine();
 				pos = buffer.IndexOf("=");
 				string fontSize = buffer.Substring(pos + 1);
 				double size = Convert.ToDouble(fontSize);
 				PrivateFontCollection fontCollection = new PrivateFontCollection();
-				fontCollection.AddFontFile(fontName);
+				fontCollection.AddFontFile(fontFolder + fontName);
 				System.Drawing.Font LoadFont = new System.Drawing.Font(fontCollection.Families[0], (float)size);
 				label1.Font = LoadFont;
 
@@ -213,10 +189,14 @@ namespace WindowsForms
 				{
 					pos = buffer.IndexOf('=');
 					label1.BackColor = Color.FromArgb(Convert.ToInt32(buffer.Substring(pos + 1)));
-					buffer = sr.ReadLine();
 				}
 			}
 			sr.Close();
+		}
+
+		private void btnSave_Click(object sender, EventArgs e)
+		{
+			save(cfgFileName);
 		}
 	}
 	}

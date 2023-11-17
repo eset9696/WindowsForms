@@ -51,6 +51,7 @@ namespace WindowsForms
 			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
 			this.btnFont = new System.Windows.Forms.Button();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+			this.btnSave = new System.Windows.Forms.Button();
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -177,7 +178,7 @@ namespace WindowsForms
 			// btnClose
 			// 
 			this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.btnClose.Location = new System.Drawing.Point(67, 426);
+			this.btnClose.Location = new System.Drawing.Point(359, 343);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(229, 77);
 			this.btnClose.TabIndex = 2;
@@ -204,12 +205,24 @@ namespace WindowsForms
 			this.btnFont.UseVisualStyleBackColor = true;
 			this.btnFont.Click += new System.EventHandler(this.btnFont_Click);
 			// 
+			// btnSave
+			// 
+			this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.btnSave.Location = new System.Drawing.Point(359, 260);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(229, 76);
+			this.btnSave.TabIndex = 4;
+			this.btnSave.Text = "Save";
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 568);
 			this.ContextMenuStrip = this.contextMenuStrip1;
+			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.btnFont);
 			this.Controls.Add(this.btnClose);
 			this.Controls.Add(this.btnHideControls);
@@ -250,6 +263,7 @@ namespace WindowsForms
 		private ToolStripMenuItem foregroundToolStripMenuItem;
 		private ToolStripMenuItem backgroundToolStripMenuItem;
 		private ColorDialog colorDialog1;
+		private Button btnSave;
 	}
 }
 

@@ -1,4 +1,4 @@
-Font=7Led-8RoJ.ttf
+Font=SfDigitalReadoutLightOblique-VqXe.ttf
 Font size=36
-ForeColor=-16711936
+ForeColor=-65536
 BackColor=-16777216
